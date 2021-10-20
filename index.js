@@ -3,11 +3,12 @@ const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const PORT = process.env.PORT || 5000;
 
 // Initialize application
 const app = express();
 dotenv.config();
-const { DB_NAME, DB_COLLECTION, DB_USER, DB_PASS, PORT } = process.env;
+const { DB_NAME, DB_COLLECTION, DB_USER, DB_PASS } = process.env;
 
 // Parse request
 app.use(express.json());
@@ -33,6 +34,11 @@ client.connect(err => {
     bookingCollection.insertOne(booking).then(result => {
       res.send(result.insertedId);
     });
+  });
+
+  // Test
+  app.get('/', (req, res) => {
+    res.send('Hello world!');
   });
 
   // Get services
